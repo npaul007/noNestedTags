@@ -1,20 +1,23 @@
 function removeNestedTags(html){
 	var dom = $(html);
-	var classList = '';
 
-    dom.find('span').each(function(){
-        var self = $(this);
-        if(dom.find('span').length > 1){
-			classList = classList + ' ' + self[0].className;
-			self.contents().unwrap();
-    	}
-    });
+	dom.each(function(index){
+		var classList = '';
+	    $(this).find('span').each(function(){
+	        var self = $(this);
+	        if($(this).find('span').length != 1){
+				classList = classList + ' ' + self[0].className;
+				self.contents().unwrap();
+	    	}
+	    });	
 
-    dom.children()[0].classList = dom.children()[0].classList + classList;
-	return dom[0],dom[1];
+	    $(this).children()[0].classList = $(this).children()[0].classList + classList
+	});
+
+	return dom;
 }
 
 $(document).ready(function(){
-	var html ='<p><span class="bold"><span class="italic"><span class="underline">foobar broski</span></span></span></p><p><span class="bold"><span class="italic"><span class="underline">foobar broski</span></span></span></p>';	
-	console.log(removeNestedTags(html));
+	var html ='<p><span class="bold"><span class="italic"><span class="underline">foobar broski</span></span></span></p><p><span class="bro"><span class="blah"><span class="yass">wtf broski</span></span></span></p>';	
+	var nonNestedHTML = removeNestedTags(html);
 });
